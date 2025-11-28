@@ -30,7 +30,17 @@ I built this project in two stages to simulate a real software engineering workf
 *   **Frontend:** React.js, Tailwind CSS (Vite)
 *   **Mapping Engine:** Leaflet.js
 *   **Map Tiles:** Esri World Imagery (Satellite View)
-*   **External APIs:** 
+*   **External APIs:**
+
+
+## 🛑 Privacy Warning
+This tool demonstrates a real privacy risk.
+
+When you send **Raw Images** (via Email, AirDrop, or as "Documents" in chat apps), you are often sharing your **exact home or work location** without realizing it.
+
+**Best Practice:**
+*   Turn off "Location Tags" in your Camera settings if you don't need them.
+*   Use tools like **Lens-Lock** to sanitize sensitive photos before sharing them publicly or with strangers.
     *   **BigDataCloud** (Free Reverse Geocoding for City Names)
     *   **Google Maps** (External Link integration)
 *   **Data Handling:** In-memory binary processing (No database required)
