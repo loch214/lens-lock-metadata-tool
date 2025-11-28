@@ -5,7 +5,7 @@ import MapDisplay from './MapDisplay';
 
 function App() {
     const [report, setReport] = useState(null);
-    const [currentFile, setCurrentFile] = useState(null); // Keep track of the file
+    const [currentFile, setCurrentFile] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -13,7 +13,7 @@ function App() {
         const file = acceptedFiles[0];
         if (!file) return;
 
-        setCurrentFile(file); // Save file to state so we can sanitize it later
+        setCurrentFile(file); // Save file info (contains size)
         setLoading(true);
         setError(null);
         setReport(null);
@@ -34,7 +34,6 @@ function App() {
         }
     };
 
-    // NEW: Function to handle the download
     const handleSanitize = async () => {
         if (!currentFile) return;
 
@@ -44,17 +43,16 @@ function App() {
         try {
             const response = await axios.post("http://localhost:8080/api/images/sanitize", formData, {
                 headers: { "Content-Type": "multipart/form-data" },
-                responseType: 'blob', // Important: Tells Axios this is a file, not text
+                responseType: 'blob',
             });
 
-            // Create a fake link to trigger download
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const link = document.createElement('a');
             link.href = url;
             link.setAttribute('download', `safe_${currentFile.name}`);
             document.body.appendChild(link);
             link.click();
-            link.remove(); // Clean up
+            link.remove();
 
         } catch (err) {
             console.error(err);
@@ -64,12 +62,22 @@ function App() {
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
+    // Helper: Convert "2025:11:28 15:25:01" -> Date & Time
     const formatDateTime = (rawString) => {
         if (!rawString) return { date: "Unknown", time: "--:--" };
         const parts = rawString.split(" ");
         const date = parts[0] ? parts[0].replace(/:/g, "-") : "Unknown";
         const time = parts[1] || "--:--";
         return { date, time };
+    };
+
+    // Helper: Convert raw bytes to MB/KB
+    const formatFileSize = (bytes) => {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     };
 
     const timeData = report ? formatDateTime(report.dateTimeTaken) : null;
@@ -104,7 +112,6 @@ function App() {
                         <div className="flex justify-between items-center mb-4 border-l-4 border-green-500 pl-3">
                             <h2 className="text-xl font-bold text-white">FORENSIC REPORT</h2>
 
-                            {/* NEW: The Sanitize Button */}
                             <button
                                 onClick={handleSanitize}
                                 className="bg-green-600 hover:bg-green-500 text-black font-bold py-2 px-4 rounded flex items-center gap-2 transition-colors text-sm"
@@ -120,9 +127,11 @@ function App() {
                                 <p className="text-xs text-gray-500 mb-1">FILE NAME</p>
                                 <p className="text-white break-all">{report.fileName}</p>
                             </div>
+
+                            {/* NEW: File Size Box */}
                             <div className="border-b border-gray-800 pb-2">
-                                <p className="text-xs text-gray-500 mb-1">SOFTWARE / OS</p>
-                                <p className="text-blue-300">{report.software || "N/A"}</p>
+                                <p className="text-xs text-gray-500 mb-1">FILE SIZE</p>
+                                <p className="text-white">{currentFile ? formatFileSize(currentFile.size) : "Unknown"}</p>
                             </div>
 
                             {/* Row 2 */}
@@ -140,7 +149,7 @@ function App() {
                             </div>
 
                             {/* Row 3 */}
-                            <div>
+                            <div className="border-b border-gray-800 pb-2 md:border-b-0">
                                 <p className="text-xs text-gray-500 mb-1">DATE CAPTURED</p>
                                 <p className="text-white">{timeData.date}</p>
                             </div>
