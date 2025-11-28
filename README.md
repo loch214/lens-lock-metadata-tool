@@ -26,4 +26,6 @@ I built this project in two stages:
 *   **Backend:** Java, Spring Boot
 *   **Frontend:** React.js, Tailwind CSS
 *   **Map:** Leaflet.js (OpenStreetMap)
-*   **Database:** None (Processing is done in-memory)
+*   **Database:** None
+
+*   maybe i will add more features later
