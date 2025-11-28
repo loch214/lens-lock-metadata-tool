@@ -28,4 +28,5 @@ I built this project in two stages:
 *   **Map:** Leaflet.js (OpenStreetMap)
 *   **Database:** None
 
-  Maybe be i will add more features later like when downloading the safe copy, select the options that need to keep/remove
+## 🔮 Future Improvements
+Maybe be i will add more features later like when downloading the safe copy, select the options that need to keep/remove and add support for bulk processing (multiple images at once).
