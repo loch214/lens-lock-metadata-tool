@@ -28,4 +28,4 @@ I built this project in two stages:
 *   **Map:** Leaflet.js (OpenStreetMap)
 *   **Database:** None
 
-*   maybe i will add more features later
+  Maybe be i will add more features later like when downloading the safe copy, select the options that need to keep/remove
