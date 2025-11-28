@@ -1,8 +1,6 @@
 # 🔒 Lens-Lock
 
-This is a project I built to practice Full Stack development using **Java Spring Boot** and **React**. 
-
-It’s a web tool that checks if an image contains hidden data (like GPS location or Device model) and allows you to "clean" that data to make the image safe for sharing.
+This is a project I built to checks if an image contains hidden data (like GPS location or Device model) and allows you to "clean" that data to make the image safe for sharing.
 
 ## ⚠️ Important Note on Images
 **This tool works best with "Raw" original photos** (e.g., photos taken directly from your camera or transferred via cable/email).
